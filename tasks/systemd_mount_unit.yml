@@ -2,7 +2,8 @@
 - name: Set unit name
   set_fact:
     mount_name: "{{ item.where[1:] | replace('/', '-') }}"
-    mount_extension: "{{ 'automount' if item.automount|default(false) else 'mount' }}"
+    mount_extension: |
+      {{ 'automount' if item.automount|default(false) else 'mount' }}
 
 - name: 'Create mount unit for {{ mount_name }}.{{ mount_extension }}'
   ansible.builtin.template:
@@ -22,5 +23,5 @@
 - name: 'Start mount unit for {{ mount_name }}.{{ mount_extension }}'
   ansible.builtin.systemd:
     name: '{{ mount_name }}.{{ mount_extension }}'
-    state: "started" 
+    state: "started"
   when: item.started | default(false)
