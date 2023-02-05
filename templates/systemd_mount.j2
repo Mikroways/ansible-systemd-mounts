@@ -1,0 +1,23 @@
+[Unit]
+{% if item.automount | default(false) %}
+Description=Automount on {{ item.where }}
+{% else %}
+Description=mount {{ item.what }} on {{ item.where }}
+After=network.target multi-user.target {{ item.target | default([]) | join(' ') }}
+RefuseManualStart={{ item.refuseManualStart | default(false)}}
+{% endif %}
+
+{%if item.automount | default(false) %}
+[Automount]
+Where={{ item.where }}
+TimeoutIdleSec={{ item.timoutIdleSec | default(30) }}
+{% else %}
+[Mount]
+What={{ item.what }}
+Where={{ item.where }}
+Type={{ item.type }}
+Options={{ item.options }}
+{% endif %}
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,26 @@
+---
+- name: Set unit name
+  set_fact:
+    mount_name: "{{ item.where[1:] | replace('/', '-') }}"
+    mount_extension: "{{ 'automount' if item.automount|default(false) else 'mount' }}"
+
+- name: 'Create mount unit for {{ mount_name }}.{{ mount_extension }}'
+  ansible.builtin.template:
+    src: systemd_mount.j2
+    dest: '/etc/systemd/system/{{ mount_name }}.{{ mount_extension }}'
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+  notify:
+    - Reload systemd
+
+- name: 'Enable mount unit for {{ mount_name }}.{{ mount_extension }}'
+  ansible.builtin.systemd:
+    name: '{{ mount_name }}.{{ mount_extension }}'
+    enabled: '{{ item.enabled | default(false) }}'
+
+- name: 'Start mount unit for {{ mount_name }}.{{ mount_extension }}'
+  ansible.builtin.systemd:
+    name: '{{ mount_name }}.{{ mount_extension }}'
+    state: "started" 
+  when: item.started | default(false)

@@ -1,0 +1,19 @@
+galaxy_info:
+  role_name: systemd_mounts
+  namespace: mikroways
+  author: Christian Rodriguez
+  description: Setup mounts as Systemd service
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 
+  platforms:
+  - name: Ubuntu
+    versions:
+    - focal
+  - name: Debian
+    versions:
+    - stretch
+    - bullseye
+  galaxy_tags:
+  - systemd
+  - mounts
+dependencies: []

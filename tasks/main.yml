@@ -1,0 +1,5 @@
+---
+# tasks file for systemd-mounts
+- name: Setup systemd Service for mountpoints
+  include: systemd_mount_unit.yml
+  with_items: "{{ systemd_mounts }}"
