@@ -1,7 +1,7 @@
 # systemd mounts
 
 This role is created upon existent [ypsman
-prole](https://github.com/ypsman/ansible-systemd-mounts). Setup mounts and
+role](https://github.com/ypsman/ansible-systemd-mounts). Setup mounts and
 automounts as sysemd Service.
 
 Created mounts can be managed as system services, for example:
